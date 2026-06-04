@@ -13,11 +13,11 @@ jobs:
         with: { python-version: '3.10' }
       - run: pip install -q jq
 
-      - name: Setup Java 11 & Maven
+      - name: Setup Java 17 & Maven (Bắt buộc dùng bản 17 cho OWASP)
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17'
 
       - name: Tải OWASP Benchmark (Dự án Java)
         run: |
@@ -28,11 +28,10 @@ jobs:
         run: |
           cd target_app
           echo "Đang biên dịch mã nguồn Java. Sẽ mất khoảng 1-2 phút..."
-          # Bỏ lệnh ẩn log đi để nếu lỗi ta sẽ nhìn thấy ngay
           mvn clean compile -DskipTests
 
       # ==========================================
-      # KHỐI CÔNG CỤ JAVA (SẼ TÌM THẤY RẤT NHIỀU LỖI)
+      # KHỐI CÔNG CỤ JAVA
       # ==========================================
       - name: 1. SpotBugs (Chuyên gia Java)
         run: |
